@@ -1,9 +1,0 @@
-com/mygdx/game/block.java
- com.mygdx.game.block
-com/mygdx/game/Background.java
- com.mygdx.game.Background
- com.mygdx.game.Background$Picture
-com/mygdx/game/Barrier.java
- com.mygdx.game.Barrier
-com/mygdx/game/MyGdxGame.java
- com.mygdx.game.MyGdxGame
