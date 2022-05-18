@@ -29,6 +29,7 @@ public class Barriers {
                 offset = MathUtils.random(-100, 100);
             }
             space.x = pos.x;
+            space.y= pos.y - offset + 320;
         }
     }
     static Pair[] bar;
