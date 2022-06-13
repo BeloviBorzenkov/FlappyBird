@@ -17,6 +17,15 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.Random;
 
+
+
+/*
+Класс для контроля цикла жизни приложения, должен реализовывать интерфейс ApplicationListener(Adapter)
+Реализацию этого интерфейса мы передаем в реализацию интерфейса Application конкретного бэкенда (платформы) -
+класс стартер
+Для отрисовки используем класс SpriteBatch - предоставляет текстуру и координаты для отрисовки прямоугольника
+ */
+
 public class MyGdxGame extends ApplicationAdapter {
 
 	public final static int width = 800;
@@ -37,10 +46,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	Sound pointSound;
 	Sound failMusic;
 
-
-
-
-	//метод создания тут создаем все объекты на экране
+	//метод create вызывается 1 раз при создании приложения
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -53,7 +59,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
 		music.setLooping(true); //бесконечное воспроизведенеие
-		music.setVolume(0.09f); //громкость
+		music.setVolume(0.07f); //громкость
 		music.play(); // запустить музыку
 
 		failSound = Gdx.audio.newSound(Gdx.files.internal("audio_hit.wav"));
@@ -75,7 +81,9 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 
-
+    /*
+    метод render вызывается приложением каждый раз когда должна быть выполнена визуализация
+     */
 	//вообще это метод для отрисовки, но в нем обычно доп логику делают, а отрисовка в draw(а где доп логика?)
 	@Override
 	public void render () {
@@ -100,6 +108,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		pipes.update();
 
 
+		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !gameOver){
+			flapSound.play(0.1f);
+		}
 
 		for (int i = 0; i < Barriers.bar.length; i++) {
 			if(bird.pos.x > Barriers.bar[i].pos.x && bird.pos.x < Barriers.bar[i].pos.x+52){
@@ -111,7 +122,7 @@ public class MyGdxGame extends ApplicationAdapter {
 				}
 			}
 
-			if(bird.pos.y < 0 || bird.pos.y > 600){
+			if(bird.pos.y <= 112 || bird.pos.y > 600){
 				gameOver = true;
 				failSound.play(0.1f);
 				failMusic.play(0.1f);
@@ -138,16 +149,17 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		bg.render(batch);
 		pipes.render(batch);
+		footer.render(batch);
 		bird.render(batch);
 
 		if(gameOver){
 			batch.draw(restart,300,300);
 		}
 
-		footer.render(batch);
 
-		font.draw(batch, score/2 + "", 400, 550);
-		font.draw(batch, "record: " + maxScore/2, 0,550);
+
+		font.draw(batch, score  + " ", 400, 550);
+		font.draw(batch, "Record: " + maxScore  , 0,550);
 
 		batch.end();
 	}
