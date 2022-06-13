@@ -17,6 +17,7 @@ public class Background {
         }
     }
 
+
     private  int speed;
     private Picture[] stack;
     //чтобы бг плавно двигался нужно создать 2 картнки которые будут идти друг за другом
@@ -25,7 +26,7 @@ public class Background {
         stack = new Picture[2];
         stack[0] = new Picture(new Vector2(0,0) );
         stack[1] = new Picture(new Vector2(800,0) );
-         speed = 2;
+        speed = 2;
     }
 
 
@@ -33,8 +34,9 @@ public class Background {
     //метод отрисовки - отрисовываем 2 наши картинки
     public void render(SpriteBatch batch){
         for(int i = 0; i < stack.length; i++){
-            batch.draw(stack[i].bg, stack[i].pos.x, stack[i].pos.y  );
+            batch.draw(stack[i].bg, stack[i].pos.x, stack[i].pos.y);
         }
+
 
     }
     //метод обновления бг - тут просто задаем скорость картинкам

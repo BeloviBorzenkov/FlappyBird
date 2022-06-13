@@ -15,12 +15,14 @@ public class Barriers {
         float speed;
         int offset;
         Rectangle space;
+        Rectangle pointLine;
 
         public Pair(Vector2 position){
             pos = position;
             speed = 3.3f;
             offset = MathUtils.random(-100, 100);;
-            space = new com.badlogic.gdx.math.Rectangle(pos.x,pos.y - offset + 320,52,BetwenDistance);
+            space = new com.badlogic.gdx.math.Rectangle(pos.x,pos.y - offset + 320,52,betwenDistance);
+            pointLine = new com.badlogic.gdx.math.Rectangle(pos.x,pos.y - offset + 320,7,betwenDistance);
         }
         public void Update(){
             pos.x -= speed;
@@ -30,18 +32,20 @@ public class Barriers {
             }
             space.x = pos.x;
             space.y= pos.y - offset + 320;
+            pointLine.x = pos.x;
+            pointLine.y= pos.y - offset + 320;
         }
     }
     static Pair[] bar;
     Texture down;
     Texture up;
-    int BetwenDistance;
+    int betwenDistance;
 
     public Barriers(){
         down = new Texture("pipe-down.png");
         up = new Texture("pipe-up.png");
         bar = new Pair[4];
-        BetwenDistance = 110;
+        betwenDistance = 110;
         int StartPos = 400;
         for (int i = 0; i < bar.length; i++) {
             bar[i] = new Pair(new Vector2(StartPos,-50));
@@ -52,7 +56,7 @@ public class Barriers {
     public void render(SpriteBatch batch){
         for (int i = 0; i < bar.length; i++) {
             batch.draw(up,bar[i].pos.x,bar[i].pos.y - bar[i].offset);
-            batch.draw(down,bar[i].pos.x,bar[i].pos.y + BetwenDistance + down.getHeight() - bar[i].offset);
+            batch.draw(down,bar[i].pos.x,bar[i].pos.y + betwenDistance + down.getHeight() - bar[i].offset);
         }
 
     }

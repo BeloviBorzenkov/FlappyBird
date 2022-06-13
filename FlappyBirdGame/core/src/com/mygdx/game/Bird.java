@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -12,12 +13,14 @@ public class Bird {
     Vector2 pos;
     float vy;
     float falling;
+    Sound flapSound;
 
     public Bird(){
         img = new Texture("bluebird-midflap.png");
         pos = new Vector2(100,380);
         vy = 0;
         falling = -0.5f;
+        flapSound = Gdx.audio.newSound(Gdx.files.internal("audio_wing.wav"));
     }
 
     public void render(SpriteBatch batch){
@@ -28,6 +31,7 @@ public class Bird {
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
             vy = 4;
+            //flapSound.play(0.1f);
         }
         vy += falling;
         pos.y += vy;
@@ -38,5 +42,8 @@ public class Bird {
         vy = 0;
     }
 
+    public void Flap(){
+        flapSound.play(0.1f);
+    }
 
 }
